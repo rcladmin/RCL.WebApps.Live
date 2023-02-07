@@ -1,0 +1,27 @@
+﻿@using System.Security.Principal
+
+<ul class="navbar-nav">
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"><span class="nav-text text-light"><i class="bi bi-person-circle"></i> @User.Identity?.Name</span></a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" asp-page="/Account/Profile"><i class="bi bi-card-list"></i> Edit Profile</a>
+                <a class="dropdown-item" asp-page="/Account/Password"><i class="bi bi-key"></i> Change Password</a>
+                <a class="dropdown-item" asp-page="/Account/SecurityGroup"><i class="bi bi-people"></i> Security Group</a>
+                <hr>
+                <a class="dropdown-item" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignOut"><i class="bi bi-box-arrow-left"></i> Sign out</a>
+            </div>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"><span class="nav-text text-light"><i class="bi bi-person-circle"></i> Login</span></a>
+            <div class="dropdown-menu">
+            <a class="nav-link text-dark" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignIn"><i class="bi bi-box-arrow-right"></i> Sign in</a>
+                <a class="nav-link text-dark" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignIn"><i class="bi bi-pencil-square"></i> Register</a>
+            </div>
+        </li>
+    }
+</ul>

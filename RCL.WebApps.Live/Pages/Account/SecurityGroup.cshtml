@@ -1,0 +1,29 @@
+﻿@page
+@model RCL.WebApps.Live.Pages.Account.SecurityGroupModel
+@{
+    ViewData["Title"] = "Security Groups";
+}
+
+<div class="card shadow rounded mt-2 mb-5">
+    <div class="card-header"><h3><i class="bi bi-people"></i> @ViewData["Title"]</h3></div>
+    <div class="card-body">
+        @if (Model?.Groups?.Count > 0)
+        {
+            <div class="alert alert-info">
+                <p>You have been assigned to the following Security Group(s) :</p>
+            </div>
+            <ul>
+                @foreach(string group in Model.Groups)
+                {
+                    <li><h5>@group</h5></li>
+                }
+            </ul>
+        }
+        else
+        {
+            <div class="alert alert-secondary">
+                <p>You have not been assigned to any Security Groups.</p>
+            </div>
+        }
+    </div>
+</div>

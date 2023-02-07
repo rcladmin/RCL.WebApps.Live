@@ -1,0 +1,74 @@
+﻿@page
+@model RCL.WebApps.Live.Areas.Admin.Pages.Group.IndexModel
+@{
+    ViewData["Title"] = "Groups";
+    Layout = "_LayoutEvent";
+}
+
+<div class="card shadow rounded">
+    <div class="card-header">
+        <h3>@ViewData["Title"]</h3>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-info">
+            <p><i class="bi bi-info-circle"></i> Groups are used to manage your events and members.</p>
+        </div>
+        @if (!string.IsNullOrEmpty(Model?.ErrorMessage))
+        {
+            <div class="alert alert-danger">
+                <p>ERROR: @Model.ErrorMessage</p>
+            </div>
+        }
+        else
+        {
+            <p>
+                <a class="btn btn-primary link_click" asp-page="./Create">
+                    <i class="bi bi-plus-circle"></i> <span>Create a Group</span>
+                </a>
+                <hr />
+            </p>
+            @if (Model?.Groups?.Count > 0)
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Status</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Groups)
+                        {
+                            <tr>
+                                <td><img src="@item.image" height="90" width="90" /></td>
+                                <td>@item.name</td>
+                                <td>@item.status</td>
+                                <td><a class="link_click" asp-page="/Event/Index" asp-area="Present" asp-route-playlistid="@item.id">Events &raquo;</a></td>
+                                <td>
+                                    <div class="dropdown">
+                                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="bi bi-gear"></i>
+                                        </a>
+
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <li><a class="dropdown-item link_click" asp-page="./Details" asp-route-id="@item.id"><i class="bi bi-list-ul"></i> Details</a></li>
+                                            <li><a class="dropdown-item link_click" asp-page="./Edit" asp-route-id="@item.id"><i class="bi bi-pencil-square"></i> Edit</a></li>
+                                            <li><a class="dropdown-item link_click" asp-page="./Delete" asp-route-id="@item.id"><i class="bi bi-trash"></i> Delete</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>There were no groups found. Why not create one?</p>
+            }
+        }
+    </div>
+</div>

@@ -1,0 +1,6 @@
+﻿.avatar-initials {
+    position: relative;
+    left: 10%;
+    top: 10%;
+    transform: translate3d(-50%, -50%, 0);
+}

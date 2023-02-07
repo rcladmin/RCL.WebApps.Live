@@ -1,0 +1,65 @@
+﻿@page
+@model RCL.WebApps.Live.Areas.Admin.Pages.Group.EditModel
+@{
+    ViewData["Title"] = "Edit Group";
+    Layout = "_LayoutEvent";
+}
+
+<div class="card shadow rounded">
+    <div class="card-header">
+        <h3><a asp-page="./Index"><i class="bi bi-arrow-left-circle"></i></a> @ViewData["Title"]</h3>
+    </div>
+    <div class="card-body">
+        @if (!string.IsNullOrEmpty(Model?.ErrorMessage))
+        {
+            <div class="alert alert-danger">
+                <p>ERROR: @Model.ErrorMessage</p>
+            </div>
+        }
+        else
+        {
+            <form enctype="multipart/form-data" method="post" id="frm_submit">
+                <input type="hidden" asp-for="Group.id" value="@Model?.Group.id" />
+                <input type="hidden" asp-for="Group.image" value="@Model?.Group?.image" />
+                <div class="form-group mt-4 mb-4">
+                    <label asp-for="Group.name" class="control-label"></label>
+                    <input asp-for="Group.name" class="form-control" />
+                    <span asp-validation-for="Group.name" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-4 mb-4">
+                    <label asp-for="Group.description" class="control-label"></label>
+                    <textarea asp-for="Group.description" class="form-control"></textarea>
+                    <span asp-validation-for="Group.description" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-4 mb-4">
+                    <label asp-for="Group.ranking" class="control-label"></label>
+                    <input asp-for="Group.ranking" class="form-control" />
+                    <span asp-validation-for="Group.ranking" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-4 mb-4">
+                    <label asp-for="Group.status" class="control-label"></label>
+                    <select asp-for="Group.status" class="form-control">
+                        <option value="Active">Active</option>
+                        <option value="InActive">InActive</option>
+                    </select>
+                    <span asp-validation-for="Group.status" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-4 mb-4">
+                    <label asp-for="Group.image" class="control-label"></label>
+                    <span data-toggle="tooltip" title="File must be a valid image file (jpg, jpeg, png, gif, bmp, svg). Maximum file size allowed is 250 Kb. Image dimension 250 x 250 square image"><i class="bi bi-question-circle-fill"></i></span>
+                    <input type="file" name="fileImage" class="form-control" />
+                    <div><small>Maximum file size: 250Kb. Image dimensions: 250 x 250 square</small></div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Submit" class="btn btn-primary" />
+                </div>
+            </form>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

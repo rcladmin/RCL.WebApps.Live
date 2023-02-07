@@ -1,0 +1,81 @@
+﻿@page
+@model RCL.WebApps.Live.Pages.Account.ProfileModel
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<div class="row mt-2 mb-5">
+    <div class="col-lg-8 mb-2">
+        <div class="card shadow rounded">
+            <div class="card-header"><h3><i class="bi bi-person-circle"></i> @ViewData["Title"]</h3></div>
+            <div class="card-body">
+                @if (!string.IsNullOrEmpty(Model?.UserData?.PhotoUrl))
+                {
+                    <div class="mt-2 mb-2">
+                        <img height="100" src="@Model?.UserData?.PhotoUrl">
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(Model?.UserData?.GivenName))
+                {
+                    <div><strong>First Name</strong></div>
+                    <div>@Html.DisplayFor(model => model.UserData.GivenName)</div>
+                }
+                @if (!string.IsNullOrEmpty(Model?.UserData?.SurName))
+                {
+                    <div><strong>Last Name</strong></div>
+                    <div>@Html.DisplayFor(model => model.UserData.SurName)</div>
+                }
+                @if (!string.IsNullOrEmpty(Model?.UserData?.DisplayName))
+                {
+                    <div><strong>Display Name</strong></div>
+                    <div>@Html.DisplayFor(model => model.UserData.DisplayName)</div>
+                }
+                @if (!string.IsNullOrEmpty(Model?.UserData?.Email))
+                {
+                    <div><strong>Email</strong></div>
+                    <div>@Html.DisplayFor(model => model.UserData.Email)</div>
+                }
+                @if (!string.IsNullOrEmpty(Model?.UserData?.StreetAddress))
+                {
+                    <div><strong>Street Address</strong></div>
+                    <div>@Html.DisplayFor(model => model.UserData.StreetAddress)</div>
+                }
+                @if (!string.IsNullOrEmpty(Model?.UserData?.City))
+                {
+                    <div><strong>City</strong></div>
+                    <div>@Html.DisplayFor(model => model.UserData.City)</div>
+                }
+                @if (!string.IsNullOrEmpty(Model?.UserData?.State))
+                {
+                    <div><strong>State/Province</strong></div>
+                    <div>@Html.DisplayFor(model => model.UserData.State)</div>
+                }
+                @if (!string.IsNullOrEmpty(Model?.UserData?.PostalCode))
+                {
+                    <div><strong>Postal Code</strong></div>
+                    <div>@Html.DisplayFor(model => model.UserData.PostalCode)</div>
+                }
+                @if (!string.IsNullOrEmpty(Model?.UserData?.Country))
+                {
+                    <div><strong>Country</strong></div>
+                    <div>@Html.DisplayFor(model => model.UserData.Country)</div>
+                }
+                @if (!string.IsNullOrEmpty(Model?.UserData?.ObjectId))
+                {
+                    <div><strong>User Id</strong></div>
+                    <div>@Html.DisplayFor(model => model.UserData.ObjectId)</div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card shadow rounded">
+            <div class="card-header"><h5>Do you want to edit your profile?</h5></div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <a class="btn btn-primary" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="EditProfile"> Edit Profile</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

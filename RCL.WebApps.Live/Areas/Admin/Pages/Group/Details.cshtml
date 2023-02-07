@@ -1,0 +1,30 @@
+﻿@page
+@model RCL.WebApps.Live.Areas.Admin.Pages.Group.DetailsModel
+@{
+    ViewData["Title"] = "Group Details";
+    Layout = "_LayoutEvent"; 
+}
+
+<div class="card shadow rounded">
+    <div class="card-header">
+        <h3><a asp-page="./Index"><i class="bi bi-arrow-left-circle"></i></a> @ViewData["Title"]</h3>
+    </div>
+    <div class="card-body">
+        @if (!string.IsNullOrEmpty(Model?.ErrorMessage))
+        {
+            <div class="alert alert-danger">
+                <p>ERROR: @Model.ErrorMessage</p>
+            </div>
+        }
+        else
+        {
+            <div><img src="@Model?.Group?.image" height="150" width="150" /></div>
+            <div><strong>Name</strong></div>
+            <div>@Html.DisplayFor(model => model.Group.name)</div>
+            <div><strong>Description</strong></div>
+            <div>@Html.DisplayFor(model => model.Group.description)</div>
+            <div><strong>Status</strong></div>
+            <div>@Html.DisplayFor(model => model.Group.status)</div>
+        }
+    </div>
+</div>
