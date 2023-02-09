@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RCL.WebApps.Live.DataContext;
 
@@ -11,9 +12,11 @@ using RCL.WebApps.Live.DataContext;
 namespace RCL.WebApps.Live.Migrations
 {
     [DbContext(typeof(LiveDbContext))]
-    partial class LiveDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230209023348_rcllive-008")]
+    partial class rcllive008
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

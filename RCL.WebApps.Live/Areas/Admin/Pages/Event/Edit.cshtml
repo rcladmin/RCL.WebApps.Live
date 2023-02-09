@@ -1,0 +1,233 @@
+﻿@page
+@model RCL.WebApps.Live.Areas.Admin.Pages.Event.EditModel
+@{
+    ViewData["Title"] = "Edit Event";
+    Layout = "_LayoutEvent";
+}
+
+<div class="card shadow rounded">
+    <div class="card-header">
+        <h3><a asp-page="./Index" asp-route-groupId="@Model.Event.groupId"><i class="bi bi-arrow-left-circle"></i></a> @ViewData["Title"]</h3>
+    </div>
+    <div class="card-body">
+        @if (!string.IsNullOrEmpty(Model?.ErrorMessage))
+        {
+            <div class="alert alert-danger">
+                <p>ERROR: @Model.ErrorMessage</p>
+            </div>
+        }
+        else
+        {
+            <form enctype="multipart/form-data" method="post" id="frm_submit">
+                <input type="hidden" asp-for="Event.groupId" value="@Model?.Event.groupId" />
+                <input type="hidden" asp-for="Event.id" value="@Model?.Event.id" />
+                <input type="hidden" asp-for="Event.image" value="@Model?.Event?.image" />
+                <div class="form-group mt-4 mb-4">
+                    <label asp-for="Event.name" class="control-label"></label>
+                    <input asp-for="Event.name" class="form-control" />
+                    <span asp-validation-for="Event.name" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-4 mb-4">
+                    <label asp-for="Event.description" class="control-label"></label>
+                    <textarea asp-for="Event.description" class="form-control"></textarea>
+                    <span asp-validation-for="Event.description" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-4 mb-4">
+                    <label asp-for="Event.sorting" class="control-label"></label>
+                    <input asp-for="Event.sorting" class="form-control" />
+                    <span asp-validation-for="Event.sorting" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-4 mb-4">
+                    <label asp-for="Event.start" class="control-label"></label>
+                    <input asp-for="Event.start" class="form-control" />
+                    <span asp-validation-for="Event.start" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-4 mb-4">
+                    <label asp-for="Event.duration" class="control-label"></label>
+                    <select asp-for="Event.duration" class="form-control">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                    <span asp-validation-for="Event.duration" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-4 mb-4">
+                    <label asp-for="Event.presenterEmail" class="control-label"></label>
+                    <input asp-for="Event.presenterEmail" class="form-control" />
+                    <span asp-validation-for="Event.presenterEmail" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-4 mb-4">
+                    <label asp-for="Event.status" class="control-label"></label>
+                    <select asp-for="Event.status" class="form-control">
+                        <option value="Active">Active</option>
+                        <option value="InActive">InActive</option>
+                    </select>
+                    <span asp-validation-for="Event.status" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-4 mb-4">
+                    <label asp-for="Event.price" class="control-label"></label>
+                    <input asp-for="Event.price" class="form-control" />
+                    <span asp-validation-for="Event.price" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-4 mb-4">
+                    <label asp-for="Event.currency" class="control-label"></label>
+                    <select asp-for="Event.currency" class="form-control">
+                        <option value="USD">USD</option>
+                        <option value="AED">AED</option>
+                        <option value="AFN">AFN</option>
+                        <option value="ALL">ALL</option>
+                        <option value="AMD">AMD</option>
+                        <option value="ANG">ANG</option>
+                        <option value="AOA">AOA</option>
+                        <option value="ARS">ARS</option>
+                        <option value="AUD">AUD</option>
+                        <option value="AWG">AWG</option>
+                        <option value="AZN">AZN</option>
+                        <option value="BAM">BAM</option>
+                        <option value="BBD">BBD</option>
+                        <option value="BDT">BDT</option>
+                        <option value="BGN">BGN</option>
+                        <option value="BIF">BIF</option>
+                        <option value="BMD">BMD</option>
+                        <option value="BND">BND</option>
+                        <option value="BOB">BOB</option>
+                        <option value="BRL">BRL</option>
+                        <option value="BSD">BSD</option>
+                        <option value="BWP">BWP</option>
+                        <option value="BYN">BYN</option>
+                        <option value="BZD">BZD</option>
+                        <option value="CAD">CAD</option>
+                        <option value="CDF">CDF</option>
+                        <option value="CHF">CHF</option>
+                        <option value="CLP">CLP</option>
+                        <option value="CNY">CNY</option>
+                        <option value="COP">COP</option>
+                        <option value="CRC">CRC</option>
+                        <option value="CVE">CVE</option>
+                        <option value="CZK">CZK</option>
+                        <option value="DJF">DJF</option>
+                        <option value="DKK">DKK</option>
+                        <option value="DOP">DOP</option>
+                        <option value="DZD">DZD</option>
+                        <option value="EGP">EGP</option>
+                        <option value="ETB">ETB</option>
+                        <option value="EUR">EUR</option>
+                        <option value="FJD">FJD</option>
+                        <option value="FKP">FKP</option>
+                        <option value="GBP">GBP</option>
+                        <option value="GEL">GEL</option>
+                        <option value="GIP">GIP</option>
+                        <option value="GMD">GMD</option>
+                        <option value="GNF">GNF</option>
+                        <option value="GTQ">GTQ</option>
+                        <option value="GYD">GYD</option>
+                        <option value="HKD">HKD</option>
+                        <option value="HNL">HNL</option>
+                        <option value="HRK">HRK</option>
+                        <option value="HTG">HTG</option>
+                        <option value="HUF">HUF</option>
+                        <option value="IDR">IDR</option>
+                        <option value="ILS">ILS</option>
+                        <option value="INR">INR</option>
+                        <option value="ISK">ISK</option>
+                        <option value="JMD">JMD</option>
+                        <option value="JPY">JPY</option>
+                        <option value="KES">KES</option>
+                        <option value="KGS">KGS</option>
+                        <option value="KHR">KHR</option>
+                        <option value="KMF">KMF</option>
+                        <option value="KRW">KRW</option>
+                        <option value="KYD">KYD</option>
+                        <option value="KZT">KZT</option>
+                        <option value="LAK">LAK</option>
+                        <option value="LBP">LBP</option>
+                        <option value="LKR">LKR</option>
+                        <option value="LRD">LRD</option>
+                        <option value="LSL">LSL</option>
+                        <option value="MAD">MAD</option>
+                        <option value="MDL">MDL</option>
+                        <option value="MGA">MGA</option>
+                        <option value="MKD">MKD</option>
+                        <option value="MMK">MMK</option>
+                        <option value="MNT">MNT</option>
+                        <option value="MOP">MOP</option>
+                        <option value="MRO">MRO</option>
+                        <option value="MUR">MUR</option>
+                        <option value="MVR">MVR</option>
+                        <option value="MWK">MWK</option>
+                        <option value="MXN">MXN</option>
+                        <option value="MYR">MYR</option>
+                        <option value="MZN">MZN</option>
+                        <option value="NAD">NAD</option>
+                        <option value="NGN">NGN</option>
+                        <option value="NIO">NIO</option>
+                        <option value="NOK">NOK</option>
+                        <option value="NPR">NPR</option>
+                        <option value="NZD">NZD</option>
+                        <option value="PAB">PAB</option>
+                        <option value="PEN">PEN</option>
+                        <option value="PGK">PGK</option>
+                        <option value="PHP">PHP</option>
+                        <option value="PKR">PKR</option>
+                        <option value="PLN">PLN</option>
+                        <option value="PYG">PYG</option>
+                        <option value="QAR">QAR</option>
+                        <option value="RON">RON</option>
+                        <option value="RSD">RSD</option>
+                        <option value="RUB">RUB</option>
+                        <option value="RWF">RWF</option>
+                        <option value="SAR">SAR</option>
+                        <option value="SBD">SBD</option>
+                        <option value="SCR">SCR</option>
+                        <option value="SEK">SEK</option>
+                        <option value="SGD">SGD</option>
+                        <option value="SHP">SHP</option>
+                        <option value="SLE">SLE</option>
+                        <option value="SLL">SLL</option>
+                        <option value="SOS">SOS</option>
+                        <option value="SRD">SRD</option>
+                        <option value="STD">STD</option>
+                        <option value="SZL">SZL</option>
+                        <option value="THB">THB</option>
+                        <option value="TJS">TJS</option>
+                        <option value="TOP">TOP</option>
+                        <option value="TRY">TRY</option>
+                        <option value="TTD">TTD</option>
+                        <option value="TWD">TWD</option>
+                        <option value="TZS">TZS</option>
+                        <option value="UAH">UAH</option>
+                        <option value="UGX">UGX</option>
+                        <option value="UYU">UYU</option>
+                        <option value="UZS">UZS</option>
+                        <option value="VND">VND</option>
+                        <option value="VUV">VUV</option>
+                        <option value="WST">WST</option>
+                        <option value="XAF">XAF</option>
+                        <option value="XCD">XCD</option>
+                        <option value="XOF">XOF</option>
+                        <option value="XPF">XPF</option>
+                        <option value="YER">YER</option>
+                        <option value="ZAR">ZAR</option>
+                        <option value="ZMW">ZMW</option>
+                    </select>
+                    <span asp-validation-for="Event.currency" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-4 mb-4">
+                    <label asp-for="Event.image" class="control-label"></label>
+                    <span data-toggle="tooltip" title="File must be a valid image file (jpg, jpeg, png, gif, bmp, svg). Maximum file size allowed is 250 Kb. Image dimension 250 x 250 square image"><i class="bi bi-question-circle-fill"></i></span>
+                    <input type="file" name="fileImage" class="form-control" />
+                    <div><small>Maximum file size: 250Kb. Image dimensions: 250 x 250 square</small></div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Submit" class="btn btn-primary" />
+                </div>
+            </form>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

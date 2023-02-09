@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RCL.WebApps.Live.DataContext;
 
@@ -11,9 +12,11 @@ using RCL.WebApps.Live.DataContext;
 namespace RCL.WebApps.Live.Migrations
 {
     [DbContext(typeof(LiveDbContext))]
-    partial class LiveDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230207211435_rcllive-005")]
+    partial class rcllive005
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,8 +68,7 @@ namespace RCL.WebApps.Live.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<decimal>("price")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("Money");
 
                     b.Property<int>("sorting")
                         .HasColumnType("int");
@@ -92,7 +94,7 @@ namespace RCL.WebApps.Live.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<DateTime>("chargeDate")
+                    b.Property<DateTime>("dateRegistered")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("eventId")
@@ -100,16 +102,13 @@ namespace RCL.WebApps.Live.Migrations
 
                     b.Property<string>("orderId")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("status")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("transactionId")
-                        .HasColumnType("int");
 
                     b.Property<string>("userId")
                         .IsRequired()
@@ -157,13 +156,13 @@ namespace RCL.WebApps.Live.Migrations
 
             modelBuilder.Entity("RCL.WebApps.Live.Models.Transaction", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("chargeAmount")
+                    b.Property<int>("chargeAmount")
                         .HasColumnType("int");
 
                     b.Property<string>("chargeAmountCurrency")
@@ -189,7 +188,7 @@ namespace RCL.WebApps.Live.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<int?>("disputeAmount")
+                    b.Property<int>("disputeAmount")
                         .HasColumnType("int");
 
                     b.Property<string>("disputeAmountCurrency")
@@ -207,16 +206,12 @@ namespace RCL.WebApps.Live.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<int?>("externalId")
-                        .IsRequired()
-                        .HasColumnType("int");
-
                     b.Property<string>("orderId")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<int?>("refundAmount")
+                    b.Property<int>("refundAmount")
                         .HasColumnType("int");
 
                     b.Property<string>("refundAmountCurrency")
@@ -239,8 +234,7 @@ namespace RCL.WebApps.Live.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime?>("transactionDate")
-                        .IsRequired()
+                    b.Property<DateTime>("transactionDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("transactionType")

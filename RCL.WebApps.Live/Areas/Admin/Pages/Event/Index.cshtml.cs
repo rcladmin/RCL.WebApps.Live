@@ -8,7 +8,7 @@ using RCL.Core.Azure.BlobStorage;
 using RCL.WebApps.Live.DataContext;
 using RCL.WebApps.Live.Helpers;
 
-namespace RCL.WebApps.Live.Areas.Admin.Pages.Group
+namespace RCL.WebApps.Live.Areas.Admin.Pages.Event
 {
     [Authorize(Policy = "Admin")]
     public class IndexModel : PageModel
@@ -16,32 +16,36 @@ namespace RCL.WebApps.Live.Areas.Admin.Pages.Group
         private readonly LiveDbContext _db;
         private readonly IAzureBlobStorageService _blobStorage;
 
-        public List<Models.Group> Groups { get; set; } = new List<Models.Group>();
+        public List<Models.Event> Events { get; set; } = new List<Models.Event>();
+        public Models.Group Group { get; set; } = new Models.Group();
         public string ErrorMessage { get; set; } = string.Empty;
 
-        public IndexModel(LiveDbContext db,
+        public IndexModel(LiveDbContext db, 
             IAzureBlobStorageService blobStorage)
         {
             _db = db;
             _blobStorage = blobStorage;
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int groupId)
         {
             try
             {
-                Groups = await _db.Groups
+                Group = await _db.Groups.FindAsync(groupId);
+
+                Events = await _db.Events
+                    .Where(w => w.groupId == groupId)
                     .AsNoTracking()
-                    .OrderByDescending(o => o.ranking)
+                    .OrderByDescending(o => o.start)
                     .ToListAsync();
 
-                if(Groups?.Count > 0)
+                if (Events?.Count > 0)
                 {
-                    foreach(var group in Groups)
+                    foreach (var item in Events)
                     {
-                        if(!string.IsNullOrEmpty(group.image))
+                        if (!string.IsNullOrEmpty(item.image))
                         {
-                            group.image = _blobStorage.GetBlobSasUri(ConstantsHelper.BLOBCONTAINER, group.image);
+                            item.image = _blobStorage.GetBlobSasUri(ConstantsHelper.BLOBCONTAINER, item.image);
                         }
                     }
                 }

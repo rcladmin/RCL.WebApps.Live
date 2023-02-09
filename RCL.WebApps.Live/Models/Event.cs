@@ -2,6 +2,7 @@
 
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace RCL.WebApps.Live.Models
 {
@@ -28,12 +29,12 @@ namespace RCL.WebApps.Live.Models
         public int sorting { get; set; }
 
         [Required]
-        [Display(Name = "Start")]
+        [Display(Name = "Start Date")]
         [DataType(DataType.DateTime)]
         public DateTime start { get; set; }
 
         [Required]
-        [Display(Name = "Duration")]
+        [Display(Name = "Duration (Hrs)")]
         public int duration { get; set; }
 
         [Required]
@@ -43,10 +44,21 @@ namespace RCL.WebApps.Live.Models
         public string status { get; set; }
 
         [Required]
-        [Display(Name = "Presenter Id")]
+        [Display(Name = "Presenter Email")]
         [DataType(DataType.Text)]
         [MaxLength(50)]
-        public string presenterId { get; set; }
+        public string presenterEmail { get; set; }
+
+        [Required]
+        [Display(Name = "Price")]
+        [Precision(18,2)]
+        public decimal price { get; set; }
+
+        [Required]
+        [Display(Name = "Currency")]
+        [DataType(DataType.Text)]
+        [MaxLength(5)]
+        public string currency { get; set; }
 
         [Required]
         [Display(Name = "Group Id")]

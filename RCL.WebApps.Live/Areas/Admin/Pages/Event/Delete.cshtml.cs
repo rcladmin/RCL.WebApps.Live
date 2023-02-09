@@ -7,7 +7,7 @@ using RCL.Core.Azure.BlobStorage;
 using RCL.WebApps.Live.DataContext;
 using RCL.WebApps.Live.Helpers;
 
-namespace RCL.WebApps.Live.Areas.Admin.Pages.Group
+namespace RCL.WebApps.Live.Areas.Admin.Pages.Event
 {
     [Authorize(Policy = "Admin")]
     public class DeleteModel : PageModel
@@ -15,11 +15,10 @@ namespace RCL.WebApps.Live.Areas.Admin.Pages.Group
         private readonly LiveDbContext _db;
         private readonly IAzureBlobStorageService _blobStorage;
 
-        public Models.Group Group { get; set; } = new Models.Group();
+        public Models.Event Event { get; set; } = new Models.Event();
         public string ErrorMessage { get; set; } = string.Empty;
 
-        public DeleteModel(LiveDbContext db,
-            IAzureBlobStorageService blobStorage)
+        public DeleteModel(LiveDbContext db, IAzureBlobStorageService blobStorage)
         {
             _db = db;
             _blobStorage = blobStorage;
@@ -31,13 +30,12 @@ namespace RCL.WebApps.Live.Areas.Admin.Pages.Group
             {
                 // TODO : Disable delete if there are related records.
 
-                Group = await _db.Groups.FindAsync(id);
+                Event = await _db.Events.FindAsync(id);
 
-                if (!string.IsNullOrEmpty(Group.image))
+                if (!string.IsNullOrEmpty(Event.image))
                 {
-                    Group.image = _blobStorage.GetBlobSasUri(ConstantsHelper.BLOBCONTAINER, Group.image);
+                    Event.image = _blobStorage.GetBlobSasUri(ConstantsHelper.BLOBCONTAINER, Event.image);
                 }
-
             }
             catch (Exception ex)
             {
@@ -51,14 +49,16 @@ namespace RCL.WebApps.Live.Areas.Admin.Pages.Group
         {
             try
             {
-                Group = await _db.Groups.FindAsync(id);
+                Event = await _db.Events.FindAsync(id);
 
-                await FileUploadHelper.DeleteFileAsync(Group.image, _blobStorage);
+                int GroupId = Event.groupId;
 
-                _db.Groups.Remove(Group);
+                await FileUploadHelper.DeleteFileAsync(Event.image, _blobStorage);
+
+                _db.Events.Remove(Event);
                 await _db.SaveChangesAsync();
 
-                return RedirectToPage("./Index");
+                return RedirectToPage("./Index", new  {groupId = GroupId });
             }
             catch (Exception ex)
             {

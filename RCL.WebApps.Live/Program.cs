@@ -1,7 +1,5 @@
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
@@ -9,10 +7,10 @@ using RCL.Core.Azure.BlobStorage;
 using RCL.Core.Identity.Graph;
 using RCL.Core.Identity.Tools;
 using RCL.WebApps.Live.DataContext;
+using RCL.WebApps.Live.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureAd"));
 
@@ -25,6 +23,11 @@ builder.Services.AddAuthorization(options =>
        policy.Requirements.Add(new GroupsCheckRequirement(new string[] { "Admin" })));
 });
 
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
+
 builder.Services.AddAzureBlobStorageServices(options =>
 {
     options.ConnectionString = builder.Configuration.GetConnectionString("Storage");
@@ -32,16 +35,16 @@ builder.Services.AddAzureBlobStorageServices(options =>
 
 builder.Services.AddDbContext<LiveDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Database")));
 
+builder.Services.AddPaymentRequestServices(options => builder.Configuration.Bind("PaymentRequest", options));
+
 builder.Services.AddRazorPages()
     .AddMicrosoftIdentityUI();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

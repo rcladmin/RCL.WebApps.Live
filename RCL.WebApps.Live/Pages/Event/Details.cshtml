@@ -1,0 +1,64 @@
+﻿@page
+
+@using RCL.WebApps.Live.Helpers
+
+@model RCL.WebApps.Live.Pages.Event.DetailsModel
+@{
+    ViewData["Title"] = "Event Details";
+}
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card shadow rounded">
+            <div class="card-header">
+                <h3> <a asp-page="/Index"><i class="bi bi-arrow-left-circle"></i></a> @Model?.Event.name</h3>
+            </div>
+            <div class="card-body">
+                @if (!string.IsNullOrEmpty(Model?.ErrorMessage))
+                {
+                    <div class="alert alert-danger">
+                        <p>ERROR: @Model.ErrorMessage</p>
+                    </div>
+                }
+                else
+                {
+                    <img src="@Model?.Event.image" class="img-fluid rounded" height="200" width="200" />
+                    <p class="mt-2"><i class="bi bi-info-circle"></i> @Model?.Event.description</p>
+                    <div><strong><i class="bi bi-calendar-week"></i> @Model?.Event.start.ToLongDateString() @Model?.Event.start.ToShortTimeString()</strong></div>
+                    <div>Atlantic Standard Time (AST) : @TimeZoneInfo.ConvertTime(Model.Event.start, TimeZoneInfo.FindSystemTimeZoneById("Atlantic Standard Time"))</div>
+                    <div>Universal Time (UTC) : @Model?.Event.start.ToUniversalTime()</div>
+                    <div class="mt-3">
+                        <h3><span class="badge bg-success"><i class="bi bi-credit-card"></i> @Model?.Event.currency @Model?.Event.price.ToString("0.00")</span></h3>
+                        @if (string.IsNullOrEmpty(User?.Identity?.Name))
+                        {
+                            <div class="alert alert-info">
+                                <p>Please Login to register for this event</p>
+                                <div><a asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignIn" class="btn btn-primary">Sign In <i class="bi bi-arrow-right-circle"></i></a></div>
+                            </div>
+                        }
+                        else
+                        {
+                            @if (Model?.Status == ConstantsHelper.REGISTERED)
+                            {
+
+                            }
+                            @if (Model?.Status == ConstantsHelper.ORDERED)
+                            {
+
+                            }
+                            @if (string.IsNullOrEmpty(Model?.Status))
+                            {
+                                <form method="post" id="frm_delete">
+                                    <input type="hidden" asp-for="Event.id" />
+                                    <input type="submit" value="Pay Now" class="btn btn-danger" />
+                                </form>
+                            }
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+    </div>
+</div>

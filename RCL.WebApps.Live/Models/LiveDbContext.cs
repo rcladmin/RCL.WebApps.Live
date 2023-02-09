@@ -16,5 +16,7 @@ namespace RCL.WebApps.Live.DataContext
 
         public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<Event> Events { get; set; }
+        public virtual DbSet<EventAttendee> EventAttendees { get; set; }
+        public virtual DbSet<Transaction> Transactions { get; set; }
     }
 }
